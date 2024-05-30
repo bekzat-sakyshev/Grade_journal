@@ -1,4 +1,9 @@
 # Byte-compiled / optimized / DLL files
+venv
+db.sqlite3
+.idea
+__pycache__/*
+*.db
 __pycache__/
 *.py[cod]
 *$py.class
