@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Scores{% endblock %}
+
+{% block content %}
+    <h1>Scores</h1>
+    <ul>
+    {% for score in scores %}
+        <li>
+            {{ score.id }}: {{ score.value }} (Student ID: {{ score.student_id }})
+            <a href="/scores/{{ score.id }}">Details</a>
+            <form action="/scores/{{ score.id }}" method="post" style="display: inline;">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">Delete</button>
+            </form>
+            <form action="/scores/{{ score.id }}" method="get" style="display: inline;">
+                <button type="submit">Edit</button>
+            </form>
+        </li>
+    {% endfor %}
+    </ul>
+    <h2>Create Score</h2>
+    <form action="/scores/" method="post">
+        <input type="number" name="value" placeholder="Score" required>
+        <input type="number" name="student_id" placeholder="Student ID" required>
+        <button type="submit">Create</button>
+    </form>
+{% endblock %}

@@ -90,6 +90,25 @@ async def create_score(student_id: int, value: int = Form(...), db: Session = De
     return RedirectResponse(url=f"/students/{student_id}", status_code=303)
 
 
+@app.post("/scores/{score_id}/edit", response_class=HTMLResponse, include_in_schema=False)
+async def edit_score(score_id: int, value: int = Form(...), db: Session = Depends(get_db)):
+    score = crud.get_score(db, score_id)
+    if score:
+        score_update = schemas.ScoreCreate(value=value, student_id=score.student_id)
+        crud.update_score(db, score_id, score_update)
+        return RedirectResponse(url=f"/students/{score.student_id}", status_code=303)
+    raise HTTPException(status_code=404, detail="Score not found")
+
+
+@app.post("/scores/{score_id}/delete", response_class=HTMLResponse, include_in_schema=False)
+async def delete_score(score_id: int, db: Session = Depends(get_db)):
+    score = crud.get_score(db, score_id)
+    if score:
+        student_id = score.student_id
+        crud.delete_score(db, score_id)
+        return RedirectResponse(url=f"/students/{student_id}", status_code=303)
+    raise HTTPException(status_code=404, detail="Score not found")
+
 
 if __name__ == "__main__":
     import uvicorn
