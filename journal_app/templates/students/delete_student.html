@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Student</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Delete Student</h1>
+        <div class="mb-3">
+            <a href="/students/" class="btn btn-primary">Back to Students</a>
+        </div>
+        <p>Are you sure you want to delete student "{{ student.name }}"?</p>
+        <form action="/students/{{ student.id }}/delete" method="post">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+</body>
+</html>

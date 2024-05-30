@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Student Details{% endblock %}
+
+{% block content %}
+    <h1>Student: {{ student.name }}</h1>
+    
+    {% if scores %}
+        <h2>Scores</h2>
+        <ul>
+        {% for score in scores %}
+            <li>
+                <form action="/scores/{{ score.id }}/edit" method="post" style="display: inline;">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <input type="hidden" name="_method" value="patch">
+                    <input type="number" name="value" value="{{ score.value }}" required>
+                    <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                </form>
+                <form action="/scores/{{ score.id }}/delete" method="post" style="display: inline;">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit" class="btn btn-danger btn-sm ml-1">Delete</button>
+                </form>
+                <!-- Score: {{ score.value }} -->
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No scores available</p>
+    {% endif %}
+
+    {% if scores|length == 0 %}
+        <h2>Add Score</h2>
+        <form action="/students/{{ student.id }}/scores/" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <input type="number" name="value" placeholder="Score" required>
+            <button type="submit" class="btn btn-success">Add Score</button>
+        </form>
+    {% endif %}
+
+    <p><a href="/students/" class="btn btn-primary">Back to Students</a></p>
+{% endblock %}

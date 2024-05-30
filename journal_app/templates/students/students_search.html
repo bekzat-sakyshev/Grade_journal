@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="mt-5">Search Results</h1>
+        {% if students %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Scores</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.name }}</td>
+                        <td>
+                            {% if student.scores %}
+                                <ul>
+                                    {% for score in student.scores %}
+                                    <li>{{ score.value }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>No scores available</p>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="/students/{{ student.id }}" class="btn btn-info">Details</a>
+                            <a href="/students/{{ student.id }}/edit" class="btn btn-warning">Edit</a>
+                            <form action="/students/{{ student.id }}/delete" method="post" style="display: inline;">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No students found</p>
+        {% endif %}
+    </div>
+{% endblock %}
