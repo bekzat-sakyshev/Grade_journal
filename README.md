@@ -6,7 +6,7 @@
 
 1. Склонируйте репозиторий и перейдите в директорию grade_journal:
 
-git clone https://github.com/bekzat-sakyshev/grade_journal.git
+git clone https://github.com/bekzat-sakyshev/grade_journal
 cd grade_journal
 
 
